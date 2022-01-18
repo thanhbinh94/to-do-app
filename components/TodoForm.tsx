@@ -1,34 +1,23 @@
 import React, { FC, useState, useEffect, useRef } from 'react'
-import { TodoObj } from './TodoObj'
-
-type Props = {
-    edit?: {
-        id: number | null,
-        value: string
-    } | null
-    onSubmit: (todo: TodoObj) => void
-}
+import { ActionType } from '../types/ActionType';
 
 
-const TodoForm: FC<Props> = ({ edit, onSubmit }) => {
+const TodoForm: FC<ActionType> = ({ edit, onSubmit }) => {
     const [input, setInput] = useState<string>(edit ? edit.value : '');
     const inputRef = useRef<HTMLInputElement>(null)
 
-    useEffect(() => {
-        if (inputRef && inputRef.current) {
-            inputRef.current.focus()
-        }
-    });
+    if (inputRef && inputRef.current) {
+        inputRef.current.focus()
+    }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInput(e.target.value);
     };
     const handleSubmit = (e: React.FormEvent<HTMLFormElement | HTMLButtonElement>) => {
         e.preventDefault();
-
         onSubmit({
             id: Math.floor(Math.random() * 10000),
-            text: input
+            value: input
         });
         setInput('');
     };

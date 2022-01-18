@@ -2,28 +2,17 @@ import React, {FC, useState} from 'react'
 import TodoForm from './TodoForm'
 import { RiCloseCircleLine } from 'react-icons/ri'
 import { TiEdit } from 'react-icons/ti'
-import { TodoObj } from './TodoObj'
+import { TodoType } from '../types/TodoType'
+import {TodoListType} from '../types/TodoListType'
 
-type ToDoEdited ={
-    id: number | null,
-    value: string
-}
-
-type Todos = {
-    todos: Array<TodoObj>
-    completeTodo: ( id: number | null) => void,
-    removeTodo: ( id: number | null) => void
-    updateTodo: (id: number | null, value: {id: number | null, text: string}) => void
-}
-
-const Todo: FC<Todos> = ({todos, completeTodo, removeTodo, updateTodo}) => {
-    const [edit, editTodo] = useState<ToDoEdited>({
+const Todo: FC<TodoListType> = ({todos, completeTodo, removeTodo, updateTodo}) => {
+    const [edit, editTodo] = useState<TodoType>({
         id: null,
         value: ''
     });
 
-    const submitUpdate = (todo: TodoObj) => {
-        const newValue = {id: todo.id, text: todo.text}
+    const submitUpdate = (todo: TodoType) => {
+        const newValue = {id: todo.id, value: todo.value}
         updateTodo(edit.id, newValue)
         editTodo({
             id: null,
@@ -37,18 +26,18 @@ const Todo: FC<Todos> = ({todos, completeTodo, removeTodo, updateTodo}) => {
 
     return <>
     {
-        todos.map((todo: TodoObj, index: number) => (
+        todos.map((todo: TodoType, index: number) => (
             <div 
                 className={todo.isComplete ? 'todo-row complete': 'todo-row'} 
                 key={index}>
                     <div key={todo.id} onClick={() => completeTodo(todo.id)}>
-                        {todo.text}
+                        {todo.value}
                     </div>
                     <div className="icons">
                         <RiCloseCircleLine
                             onClick={() => removeTodo(todo.id)} className="delete-icon" />
                         <TiEdit
-                            onClick={() => editTodo({ id: todo.id, value: todo.text })} className="edit-icon" />
+                            onClick={() => editTodo({ id: todo.id, value: todo.value })} className="edit-icon" />
                     </div>
             </div>
         ))   

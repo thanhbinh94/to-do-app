@@ -1,24 +1,27 @@
-import React, {FC, useState } from 'react'
-import TodoForm from './TodoForm'
-import Todo from './Todo';
+import React, {FC, useState , Suspense} from 'react'
 import Modal from 'react-modal';
-import { TodoObj } from './TodoObj'
+import { TodoType } from '../types/TodoType'
+import LoadingModal from './LoadingModal';
+// import TodoForm from './TodoForm'
+// import Todo from './Todo';
+const TodoForm = React.lazy(() => import('./TodoForm'))
+const Todo = React.lazy(() => import('./Todo'))
 
 const TodoList: FC = () => {
-    const [todos, setTodos] = useState<TodoObj[]>([]);
+    const [todos, setTodos] = useState<TodoType[]>([]);
 
     const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 
-    const addTodo = (todo: TodoObj) => {
+    const addTodo = (todo: TodoType) => {
         const newTodos = [todo, ...todos]
         
-        if (!todo.text || /^\s*$/.test(todo.text)) {
+        if (!todo.value || /^\s*$/.test(todo.value)) {
             return;
         }
         if (newTodos.length !== 0) {
             var i = 1
             while (i < newTodos.length) {
-                if (newTodos[i].text === todo.text) {
+                if (newTodos[i].value === todo.value) {
                     setModalIsOpen(true);
                 }
                 i++;
@@ -27,8 +30,8 @@ const TodoList: FC = () => {
         setTodos(newTodos)
     };
 
-    const updateTodo = (todoId: number | null, newValue: {id: number | null, text: string}) => {
-        if (!newValue.text || /^\s*$/.test(newValue.text)) {
+    const updateTodo = (todoId: number | null, newValue: {id: number | null, value: string}) => {
+        if (!newValue.value || /^\s*$/.test(newValue.value)) {
             return;
         }
 
@@ -54,9 +57,11 @@ const TodoList: FC = () => {
     return (
         <div>
             <h1>What's the task for Today?</h1>
-            <TodoForm onSubmit={addTodo} />
-            <Todo todos={todos} completeTodo={completeTodo}
-                removeTodo={removeTodo} updateTodo={updateTodo} />
+            <Suspense fallback={LoadingModal} >
+                <TodoForm onSubmit={addTodo} />
+                <Todo todos={todos} completeTodo={completeTodo}
+                    removeTodo={removeTodo} updateTodo={updateTodo} />
+            </Suspense>
             <Modal className="modal" isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
                 <h2>Ooops!</h2>
                 <p>It's look like you already add this task...</p>
