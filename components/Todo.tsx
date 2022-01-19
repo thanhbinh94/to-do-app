@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react'
-import TodoForm from './TodoForm'
+import TodoForm from './TodoFormComponents/TodoForm'
 import { RiCloseCircleLine } from 'react-icons/ri'
 import { TiEdit } from 'react-icons/ti'
 import { TodoType } from '../types/TodoType'
