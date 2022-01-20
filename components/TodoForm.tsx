@@ -1,8 +1,8 @@
 import React, { FC, useState, useEffect, useRef } from 'react'
-import { ActionType } from '../types/ActionType';
+import { IActionType } from '../common/types/ActionType';
 
 
-const TodoForm: FC<ActionType> = ({ edit, onSubmit }) => {
+const TodoForm: FC<IActionType> = ({ edit, onSubmit }) => {
     const [input, setInput] = useState<string>(edit ? edit.value : '');
     const inputRef = useRef<HTMLInputElement>(null)
 

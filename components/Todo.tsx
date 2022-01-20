@@ -2,18 +2,17 @@ import React, {FC, useState} from 'react'
 import TodoForm from './TodoForm'
 import { RiCloseCircleLine } from 'react-icons/ri'
 import { TiEdit } from 'react-icons/ti'
-import { TodoType } from '../types/TodoType'
-import {TodoListType} from '../types/TodoListType'
+import { ITodoType } from '../common/types/TodoType'
+import {ITodoListType} from '../common/types/TodoListType'
 
-const Todo: FC<TodoListType> = ({todos, completeTodo, removeTodo, updateTodo}) => {
-    const [edit, editTodo] = useState<TodoType>({
+const Todo: FC<ITodoListType> = ({todos, completeTodo, removeTodo, updateTodo}) => {
+    const [edit, editTodo] = useState<ITodoType>({
         id: null,
         value: ''
     });
 
-    const submitUpdate = (todo: TodoType) => {
-        const newValue = {id: todo.id, value: todo.value}
-        updateTodo(edit.id, newValue)
+    const submitUpdate = (updatedTodo: ITodoType) => {
+        updateTodo(updatedTodo)
         editTodo({
             id: null,
             value: ''
@@ -26,7 +25,7 @@ const Todo: FC<TodoListType> = ({todos, completeTodo, removeTodo, updateTodo}) =
 
     return <>
     {
-        todos.map((todo: TodoType, index: number) => (
+        todos.map((todo: ITodoType, index: number) => (
             <div 
                 className={todo.isComplete ? 'todo-row complete': 'todo-row'} 
                 key={index}>

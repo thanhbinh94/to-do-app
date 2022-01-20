@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import {MediaQueries} from '../utilities/MediaQueries'
+import {MediaQueries} from '../common/utilities/MediaQueries'
 
 type InputType = {
     valueInput: string
