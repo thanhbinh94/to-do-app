@@ -5,7 +5,7 @@ import LoadingModal from './LoadingModal';
 import { useTodosHook } from '../common/hooks/usetodos'
 // import TodoForm from './TodoForm'
 // import Todo from './Todo';
-const TodoForm = React.lazy(() => import('./TodoForm'))
+const TodoForm = React.lazy(() => import('./TodoFormComponents/TodoForm'))
 const Todo = React.lazy(() => import('./Todo'))
 
 const TodoList: FC = () => {

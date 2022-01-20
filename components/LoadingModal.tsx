@@ -1,3 +1,5 @@
+import {MediaQueries} from '../utilities/MediaQueries'
+
 const LoadingModal = () => {
     return (
         <>
