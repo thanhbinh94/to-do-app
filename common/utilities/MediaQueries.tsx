@@ -1,4 +1,5 @@
 export const breakpoints = {
+    smm: 320, // For modal
     sm: 375,
     md: 425,
     lg: 768,
